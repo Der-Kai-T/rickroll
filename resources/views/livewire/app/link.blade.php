@@ -5,7 +5,7 @@
         }
         ?>
         <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary mb-2 float-end mt-1 mr-1" data-bs-toggle="modal" data-bs-target="#createLinkModal" wire:click="clear">
+    <button type="button" class="btn btn-primary mb-2 float-end mt-1 mr-1" wire:click="clear">
         new Link
     </button>
 
@@ -17,15 +17,12 @@
             <th>Weight</th>
             <th>Available from</th>
             <th>Available till</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
-        @foreach($links as $link)
+        @foreach($links->sortBy("name") as $link)
             <tr
                 wire:click="load('{{ $link->id }}')"
-                data-bs-toggle="modal"
-                data-bs-target="#updateLinkModal"
             >
                 <td>
                    {{ $link->name}}
@@ -42,54 +39,32 @@
                     {{ $link->end->format("d.m.Y H:i") }}
                     @endif
                 </td>
-                <td>
-                    <span
-                        class="btn btn-sm btn-danger"
-                        wire:click="load('{{ $link->id }}')"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteLinkModal"
-                    >del</span>
-                </td>
             </tr>
         @endforeach
         </tbody>
     </table>
 
+<div>
+<div class="p-2">
+    <div class="card">
+        <div class="card-header">
+            create / update
+        </div>
+        <div class="card-body">
+            <x-app.helper.form.input model="name"/>
+            <x-app.helper.form.input model="url"/>
+            <x-app.helper.form.input model="weight" type="numeric"/>
+            <x-app.helper.form.input model="start" type="datetime-local" optional/>
+            <x-app.helper.form.input model="end" type="datetime-local" optional/>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" wire:click="create">Create new</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" wire:click="update">Update</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" wire:click="delete">Delete</button>
 
+        </div>
+    </div>
+</div>
 
-    <!-- Modal -->
-    <x-app.helper.modal
-     name="createLinkModal"
-     headline="create new Link"
-     submit-function="create"
-    >
-      <x-app.helper.form.input model="name"/>
-      <x-app.helper.form.input model="url"/>
-      <x-app.helper.form.input model="weight" type="numeric"/>
-      <x-app.helper.form.input model="start" type="datetime-local" optional/>
-      <x-app.helper.form.input model="end" type="datetime-local" optional/>
-    </x-app.helper.modal>
-
-    <x-app.helper.modal
-        name="updateLinkModal"
-        headline="update Link"
-        submit-function="update"
-    >
-        <x-app.helper.form.input model="name"/>
-        <x-app.helper.form.input model="url"/>
-        <x-app.helper.form.input model="weight" type="numeric"/>
-        <x-app.helper.form.input model="start" type="datetime-local" optional/>
-        <x-app.helper.form.input model="end" type="datetime-local" optional/>
-    </x-app.helper.modal>
-
-    <x-app.helper.modal
-        name="deleteLinkModal"
-        headline="Confirm deletion"
-        submit-function="delete"
-        submit-label="Delete"
-        submit-class="btn-danger"
-    >
-        Are you sure to delete that?
-    </x-app.helper.modal>
-
+</div>
 </div>

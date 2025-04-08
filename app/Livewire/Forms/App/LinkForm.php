@@ -35,8 +35,8 @@ class LinkForm extends Form
         $this->name = $link->name;
         $this->url = $link->url;
         $this->weight = $link->weight;
-        $this->start = $link->start;
-        $this->end = $link->end;
+        $this->start = $link->start->format('Y-m-d H:i');
+        $this->end = $link->end->format('Y-m-d H:i');
         return true;
     }
 
