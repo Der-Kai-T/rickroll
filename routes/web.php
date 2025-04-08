@@ -11,6 +11,7 @@ Route::get('/', function () {
     if(count($items) > 0){
         $itemModel = new \App\Models\Link();
         $selected = $itemModel->selectWeightedRandom($items);
+        return redirect($selected->url);
     }else{
         return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     }
