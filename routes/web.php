@@ -7,11 +7,14 @@ Route::get('/', function () {
     $items = \App\Models\Link::where("start", "<", $now)
         ->where("end", ">", $now)
         ->get();
-    dump($items);
-    $itemModel = new \App\Models\Link();
-    $selected = $itemModel->selectWeightedRandom($items);
 
-    dump($selected->url);
+    if(count($items) > 0){
+        $itemModel = new \App\Models\Link();
+        $selected = $itemModel->selectWeightedRandom($items);
+    }else{
+        return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    }
+
 
 });
 

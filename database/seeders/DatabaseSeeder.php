@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Link;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -33,7 +34,9 @@ class DatabaseSeeder extends Seeder
         Link::create([
             "url" => "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
             "name" => "Rick",
-            "weight" => 10
+            "weight" => 10,
+            "start"=>Carbon::now(),
+            "end"=>Carbon::now()->addYear(),
         ]);
     }
 }
